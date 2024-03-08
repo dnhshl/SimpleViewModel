@@ -98,6 +98,7 @@ fun MyApp() {
 
     // display Snackbar (executed on viewModel.showSnackbar())
     LaunchedEffect(snackbarMessage) {
+        Log.i(">>>>", "LaunchedEffect $snackbarMessage")
         snackbarMessage?.let {
             val result = snackbarHostState
                 .showSnackbar(
@@ -111,15 +112,16 @@ fun MyApp() {
                 SnackbarResult.ActionPerformed -> {
                     Log.i(">>>>","Snackbar Action")
                     viewModel.snackbarOnAction.invoke()
+                    viewModel.resetSnackbar()
                 }
                 SnackbarResult.Dismissed -> {
                     Log.i(">>>>","Snackbar Dismiss")
                     viewModel.snackbarOnDismiss.invoke()
+                    viewModel.resetSnackbar()
                 }
             }
         }
     }
-
 }
 
 

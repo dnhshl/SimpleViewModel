@@ -10,6 +10,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -30,14 +31,17 @@ fun HomeScreen(
 
     Log.i(">>>>", "clickCounter in HomeScreen $clickCounter")
 
-    if (clickCounter%5 == 1) viewModel.showSnackbar(
-        message ="clickCounter reached $clickCounter",
-        actionLabel = "OK",
-        duration = SnackbarDuration.Long,
-        onAction = { Log.i(">>>>","onAction in Snackbar") },
-        onDismiss = { viewModel.incrementAndSaveClickCounter() }
-        )
 
+    // show snackbar only max once for the same clickCounter
+    LaunchedEffect(clickCounter) {
+        if (clickCounter % 5 == 1) viewModel.showSnackbar(
+            message = "clickCounter reached",
+            actionLabel = "OK",
+            duration = SnackbarDuration.Indefinite,
+            onAction = { viewModel.incrementAndSaveClickCounter() },
+            onDismiss = { viewModel.incrementAndSaveClickCounter() }
+        )
+    }
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,

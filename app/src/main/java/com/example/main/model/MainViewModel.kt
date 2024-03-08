@@ -77,10 +77,9 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         dismissable: Boolean = true,
         duration: SnackbarDuration = SnackbarDuration.Indefinite,
         onAction: () -> Unit = {},
-        onDismiss: () -> Unit = {}
+        onDismiss: () -> Unit = {},
+        showAgain: Boolean = false
     ) {
-        // reset Snackbar
-        _snackbarMessage.value = null
         // set Snackbar
         _snackbarMessage.value = message
         _snackbarDismissable = dismissable
@@ -89,5 +88,11 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         _snackbarOnAction = onAction
         _snackbarOnDismiss = onDismiss
     }
+
+
+    fun resetSnackbar() {
+        _snackbarMessage.value = null
+    }
+
 
 }
